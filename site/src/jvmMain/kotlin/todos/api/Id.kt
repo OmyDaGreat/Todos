@@ -1,10 +1,10 @@
-package todo.api
+package todos.api
 
 import com.varabyte.kobweb.api.Api
 import com.varabyte.kobweb.api.ApiContext
 import com.varabyte.kobweb.api.http.HttpMethod
 import com.varabyte.kobweb.api.http.setBodyText
-import java.util.*
+import java.util.UUID
 
 /**
  * Instead of generating an ID on the client (where there's no UUID library by default), we just ask the server to do

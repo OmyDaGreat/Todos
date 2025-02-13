@@ -1,14 +1,14 @@
 site:
-  title: "Todo"
+  title: "Todos"
 
 server:
   files:
     dev:
       contentRoot: "build/processedResources/js/main/public"
-      script: "build/kotlin-webpack/js/developmentExecutable/todo.js"
-      api: "build/libs/todo.jar"
+      script: "build/kotlin-webpack/js/developmentExecutable/todos.js"
+      api: "build/libs/todos.jar"
     prod:
-      script: "build/kotlin-webpack/js/productionExecutable/todo.js"
+      script: "build/kotlin-webpack/js/productionExecutable/todos.js"
       siteRoot: ".kobweb/site"
 
   port: 8080

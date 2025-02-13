@@ -1,4 +1,4 @@
-This is a [Kobweb](https://github.com/varabyte/kobweb) project instantiated from the `examples/todo` template.
+This is a [Kobweb](https://github.com/varabyte/kobweb) project instantiated from the `examples/todos` template.
 
 The purpose of this project is to showcase a minimal Todo app, demonstrating:
 

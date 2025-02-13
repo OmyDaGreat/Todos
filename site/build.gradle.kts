@@ -5,10 +5,11 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kobweb.application)
+    alias(libs.plugins.spotless)
 }
 
-group = "todo"
-version = "1.0-SNAPSHOT"
+group = "todos"
+version = "1.0.0"
 
 kotlin {
     configAsKobwebApplication(includeServer = true)
@@ -26,7 +27,15 @@ kotlin {
         }
 
         jvmMain.dependencies {
+            implementation(libs.postgresql)
+            implementation(libs.bundles.exposed)
             compileOnly(libs.kobweb.api) // Provided by Kobweb backend at runtime
         }
+    }
+}
+
+spotless {
+    kotlin {
+        ktlint().setEditorConfigPath(project.file(".editorconfig"))
     }
 }

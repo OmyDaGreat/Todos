@@ -1,9 +1,9 @@
-package todo.model
+package todos.model
 
 import kotlinx.serialization.Serializable
 
 @Serializable
 class TodoItem(
     val id: String,
-    val text: String,
+    val todo: String,
 )
