@@ -2,7 +2,7 @@
 jetbrains-compose = "1.7.3"
 kobweb = "0.20.4"
 kotlin = "2.1.10"
-kotlinx-serialization = "1.4.0"
+kotlinx-serialization = "1.8.0"
 spotless = "7.0.2"
 postgres = "42.7.5"
 exposed = "0.60.0"
