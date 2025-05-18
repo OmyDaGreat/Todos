@@ -1,6 +1,6 @@
 [versions]
 jetbrains-compose = "1.8.0"
-kobweb = "0.20.4"
+kobweb = "0.22.0"
 kotlin = "2.1.21"
 kotlinx-serialization = "1.8.0"
 spotless = "7.0.3"
