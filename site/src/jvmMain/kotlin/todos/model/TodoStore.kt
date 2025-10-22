@@ -7,6 +7,7 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.UUID
 
@@ -15,18 +16,28 @@ object Todos : UUIDTable() {
     val todo = varchar("todo", 255)
 }
 
-class TodoStore {
+object TodoStore {
     init {
+        val dbHost = System.getenv("DB_HOST") ?: "db"
+        val dbPort = System.getenv("DB_PORT") ?: "5432"
+        val dbName = System.getenv("DB_NAME") ?: "todos"
+        val dbUser = System.getenv("DB_USER") ?: "malefic"
+        val dbPassword = System.getenv("DB_PASSWORD") ?: "password"
+
+        println("Connecting to database: jdbc:postgresql://$dbHost:$dbPort/$dbName")
+
         Database.connect(
-            url = "jdbc:postgresql://db:5432/todos",
+            url = "jdbc:postgresql://$dbHost:$dbPort/$dbName",
             driver = "org.postgresql.Driver",
-            user = "malefic",
-            password = "password",
+            user = dbUser,
+            password = dbPassword,
         )
 
         transaction {
             SchemaUtils.create(Todos)
         }
+
+        println("Database initialized successfully")
     }
 
     fun add(
@@ -56,7 +67,8 @@ class TodoStore {
     operator fun get(ownerId: String): List<TodoItem> =
         transaction {
             Todos
-                .select(Todos.ownerId eq ownerId)
+                .selectAll()
+                .where { Todos.ownerId eq ownerId }
                 .map {
                     TodoItem(
                         id = it[Todos.id].toString(),
