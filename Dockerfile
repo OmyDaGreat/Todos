@@ -27,7 +27,7 @@ RUN ./gradlew :site:jvmJar --no-daemon
 RUN ./gradlew :site:kobwebUnpackServerJar :site:kobwebCreateServerScripts --no-daemon
 
 # Stage 2: Runtime image
-FROM eclipse-temurin:17-jre-alpine
+FROM eclipse-temurin:25-jre-alpine
 
 # Install bash and curl for running scripts and health checks
 RUN apk add --no-cache bash curl
