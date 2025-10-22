@@ -26,6 +26,33 @@ docker-compose up -d --build
 
 Then open [http://localhost:8080](http://localhost:8080) with your browser to see the result.
 
+The application will:
+- Start a PostgreSQL database with persistent storage
+- Build the Kobweb frontend (JavaScript bundle)
+- Build the Kobweb backend (API server with database integration)
+- Wait for the database to be healthy before starting the app
+- Serve the complete application on port 8080
+
+### Verifying the Deployment
+
+You can verify the application is running correctly:
+
+```bash
+# Check application health
+curl http://localhost:8080/api/health
+
+# Check all services are running
+docker-compose ps
+
+# View application logs
+docker-compose logs -f app
+
+# View database logs
+docker-compose logs -f db
+```
+
+### Stopping the Application
+
 To stop the application:
 
 ```bash
@@ -67,3 +94,12 @@ and open [http://localhost:8080](http://localhost:8080) with your browser to see
 - `site/src/jvmMain/` - Server-side code (API endpoints, database integration)
 - `Dockerfile` - Multi-stage Docker build configuration
 - `docker-compose.yml` - Docker Compose orchestration for app and database
+
+## Features
+
+- ✅ **Frontend**: Reactive UI built with Compose for Web
+- ✅ **Backend**: RESTful API endpoints for todo operations
+- ✅ **Database**: PostgreSQL with Exposed ORM for data persistence
+- ✅ **Docker**: Complete containerized deployment
+- ✅ **Health Checks**: Application and database monitoring
+- ✅ **Environment Config**: Flexible configuration via environment variables
