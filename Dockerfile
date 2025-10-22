@@ -29,8 +29,8 @@ RUN ./gradlew :site:kobwebUnpackServerJar :site:kobwebCreateServerScripts --no-d
 # Stage 2: Runtime image
 FROM eclipse-temurin:17-jre-alpine
 
-# Install bash for running the start script
-RUN apk add --no-cache bash
+# Install bash and curl for running scripts and health checks
+RUN apk add --no-cache bash curl
 
 # Set up the site directory structure that matches the build
 WORKDIR /app/site
