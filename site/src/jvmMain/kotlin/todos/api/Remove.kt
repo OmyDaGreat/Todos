@@ -18,7 +18,7 @@ import todos.model.TodoStore
 fun removeTodo(ctx: ApiContext) =
     ctx.process { (ownerId, todoId) ->
         // Remove the todos item from the TodoStore
-        data.getValue<TodoStore>().remove(ownerId, todoId)
+        TodoStore.remove(ownerId, todoId)
         // Set the response status to 200 (OK)
         res.status = 200
     }

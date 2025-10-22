@@ -27,9 +27,6 @@ fun listTodos(ctx: ApiContext) {
     // Extract owner parameter from the request, if null, return early
     val ownerId = ctx.req.params["owner"] ?: return
 
-    // Retrieve the TodoStore from the context data
-    val todos = ctx.data.getValue<TodoStore>()
-
     // Set the response body with the serialized list of todos items for the owner
-    ctx.res.setBodyText(Json.encodeToString(todos[ownerId]))
+    ctx.res.setBodyText(Json.encodeToString(TodoStore[ownerId]))
 }

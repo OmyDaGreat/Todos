@@ -18,7 +18,7 @@ import todos.model.TodoStore
 fun addTodo(ctx: ApiContext) =
     ctx.process { (ownerId, todo) ->
         // Add the todos item to the TodoStore
-        data.getValue<TodoStore>().add(ownerId, todo)
+        TodoStore.add(ownerId, todo)
         // Set the response status to 200 (OK)
         res.status = 200
     }
