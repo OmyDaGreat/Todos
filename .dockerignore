@@ -1,0 +1,34 @@
+# Git
+.git
+.gitignore
+.github
+
+# Build artifacts
+build
+out
+.gradle
+.kotlin
+kotlin-js-store
+
+# IDE
+.idea
+*.iml
+*.ipr
+*.iws
+.vscode
+
+# Node modules (if any)
+node_modules
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Documentation (not needed in image)
+README.md
+LICENSE
+
+# Docker files (not needed in image)
+Dockerfile
+.dockerignore
+docker-compose.yml
