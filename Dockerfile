@@ -17,22 +17,29 @@ RUN ./gradlew dependencies --no-daemon || true
 COPY site/src site/src
 COPY site/.kobweb site/.kobweb
 
-# Build the application (production bundle and jar)
-RUN ./gradlew :site:kobwebExport -PkobwebReuseServer=false -PkobwebEnv=PROD --no-daemon
+# Build the production JS bundle
+RUN ./gradlew :site:jsBrowserProductionWebpack --no-daemon
+
+# Build the JVM API jar
+RUN ./gradlew :site:jvmJar --no-daemon
+
+# Unpack the Kobweb server and create start scripts
+RUN ./gradlew :site:kobwebUnpackServerJar :site:kobwebCreateServerScripts --no-daemon
 
 # Stage 2: Runtime image
 FROM eclipse-temurin:17-jre-alpine
 
-WORKDIR /app
-
-# Install script dependencies
+# Install bash for running the start script
 RUN apk add --no-cache bash
 
-# Copy the exported site from builder
-COPY --from=builder /build/site/.kobweb /app/.kobweb
+# Set up the site directory structure that matches the build
+WORKDIR /app/site
 
-# Copy the server scripts
-COPY --from=builder /build/site/build/kobweb/server /app/server
+# Copy .kobweb folder with server.jar and start scripts
+COPY --from=builder /build/site/.kobweb .kobweb
+
+# Copy build directory with JS bundle, API jar, and resources
+COPY --from=builder /build/site/build build
 
 # Set environment variables for database connection
 ENV DB_HOST=db
@@ -44,5 +51,5 @@ ENV DB_PASSWORD=password
 # Expose the port the application runs on
 EXPOSE 8080
 
-# Run the Kobweb server
-CMD ["bash", "/app/server/start.sh"]
+# Run the Kobweb server start script
+CMD ["bash", ".kobweb/server/start.sh"]
