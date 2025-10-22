@@ -24,6 +24,8 @@ object TodoStore {
         val dbUser = System.getenv("DB_USER") ?: "malefic"
         val dbPassword = System.getenv("DB_PASSWORD") ?: "password"
 
+        println("Connecting to database: jdbc:postgresql://$dbHost:$dbPort/$dbName")
+
         Database.connect(
             url = "jdbc:postgresql://$dbHost:$dbPort/$dbName",
             driver = "org.postgresql.Driver",
@@ -34,6 +36,8 @@ object TodoStore {
         transaction {
             SchemaUtils.create(Todos)
         }
+
+        println("Database initialized successfully")
     }
 
     fun add(
