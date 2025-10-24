@@ -11,7 +11,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.Snapshot
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.varabyte.kobweb.browser.api
-import com.varabyte.kobweb.compose.css.FontWeight
 import com.varabyte.kobweb.compose.css.TextAlign
 import com.varabyte.kobweb.compose.css.WhiteSpace
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
@@ -23,9 +22,6 @@ import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.fillMaxSize
 import com.varabyte.kobweb.compose.ui.modifiers.fillMaxWidth
-import com.varabyte.kobweb.compose.ui.modifiers.fontSize
-import com.varabyte.kobweb.compose.ui.modifiers.fontWeight
-import com.varabyte.kobweb.compose.ui.modifiers.lineHeight
 import com.varabyte.kobweb.compose.ui.modifiers.margin
 import com.varabyte.kobweb.compose.ui.modifiers.maxWidth
 import com.varabyte.kobweb.compose.ui.modifiers.minWidth
@@ -35,15 +31,11 @@ import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.core.Page
 import com.varabyte.kobweb.silk.components.navigation.Link
 import com.varabyte.kobweb.silk.components.text.SpanText
-import com.varabyte.kobweb.silk.style.CssStyle
-import com.varabyte.kobweb.silk.style.base
 import com.varabyte.kobweb.silk.style.toModifier
 import kotlinx.browser.window
 import kotlinx.coroutines.launch
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import org.jetbrains.compose.web.css.cssRem
-import org.jetbrains.compose.web.css.em
 import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.dom.Footer
 import org.jetbrains.compose.web.dom.Span
@@ -52,6 +44,7 @@ import todos.components.widgets.LoadingSpinner
 import todos.components.widgets.TodoCard
 import todos.components.widgets.TodoForm
 import todos.model.TodoItem
+import todos.styles.TitleStyle
 
 private suspend fun loadAndReplaceTodos(
     id: String,
@@ -62,15 +55,6 @@ private suspend fun loadAndReplaceTodos(
         todos.addAll(Json.decodeFromString(listBytes.decodeToString()))
     }
 }
-
-val TitleStyle =
-    CssStyle.base {
-        Modifier
-            .lineHeight(1.15)
-            .fontSize(4.cssRem)
-            .margin(top = 0.4.em, bottom = 0.6.em)
-            .fontWeight(FontWeight.Bold)
-    }
 
 @Page
 @Composable
@@ -114,7 +98,8 @@ fun HomePage() {
                 .toAttrs(),
         ) {
             Text("TODO App with ")
-            Link("https://github.com/varabyte/kobweb", "Kobweb!")
+            Link("https://github.com/varabyte/kobweb", "Kobweb")
+            Text("!")
         }
 
         Column(Modifier.fillMaxSize()) {
@@ -149,10 +134,10 @@ fun HomePage() {
             Spacer()
             Footer {
                 Row {
-                    SpanText("Project inspired by ")
+                    SpanText("Project based off of ")
                     Link(
-                        "https://blog.upstash.com/nextjs-todo",
-                        "Upstash's Next.js TODO App",
+                        "https://github.com/varabyte/kobweb-templates/tree/main/examples/todo",
+                        "Varabyte's Kobweb Todo Example",
                     )
                 }
             }

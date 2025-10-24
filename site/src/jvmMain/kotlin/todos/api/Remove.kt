@@ -2,7 +2,6 @@ package todos.api
 
 import com.varabyte.kobweb.api.Api
 import com.varabyte.kobweb.api.ApiContext
-import com.varabyte.kobweb.api.data.getValue
 import todos.model.TodoStore
 
 /**
