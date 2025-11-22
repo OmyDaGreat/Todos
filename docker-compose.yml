@@ -1,41 +1,49 @@
 services:
-  app:
-    build: .
+  kobweb:
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8080:8080"
-    depends_on:
-      db:
-        condition: service_healthy
     environment:
-      DB_HOST: db
-      DB_PORT: 5432
-      DB_NAME: todos
-      DB_USER: malefic
-      DB_PASSWORD: password
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/api/health"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
-      start_period: 30s
+      # Database connection settings
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=todos
+      - DB_USER=malefic
+      - DB_PASSWORD=password
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - kobweb-network
     restart: unless-stopped
 
-  db:
-    image: postgres:18
-    environment:
-      POSTGRES_DB: todos
-      POSTGRES_USER: malefic
-      POSTGRES_PASSWORD: password
+  postgres:
+    image: postgres:16-alpine
     ports:
       - "5432:5432"
+    environment:
+      - POSTGRES_DB=todos
+      - POSTGRES_USER=malefic
+      - POSTGRES_PASSWORD=password
     volumes:
-      - postgres_data:/var/lib/postgresql
+      - postgres_data:/var/lib/postgresql/data
+      # Optional: Mount initialization scripts
+      # - ./init-scripts:/docker-entrypoint-initdb.d
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U malefic -d todos"]
-      interval: 5s
+      interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - kobweb-network
     restart: unless-stopped
 
 volumes:
   postgres_data:
+    driver: local
+
+networks:
+  kobweb-network:
+    driver: bridge
