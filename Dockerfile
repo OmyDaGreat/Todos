@@ -1,6 +1,6 @@
 ARG KOBWEB_APP_ROOT="site"
 
-FROM eclipse-temurin:21 AS java
+FROM eclipse-temurin:25 AS java
 
 FROM java AS export
 
